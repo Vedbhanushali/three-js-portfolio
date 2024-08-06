@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import React, { lazy, Suspense } from "react";
 import ReactDOM from "react-dom/client";
+import { NextUIProvider } from "@nextui-org/react";
 import "./index.css";
 
 import Header from "./components/Header";
@@ -16,11 +17,15 @@ const Projects = lazy(() => import("./routes/Projects"));
 
 const AppLayout = () => {
   return (
-    <>
-      <Header />
-      <Outlet />
-      <Footer />
-    </>
+    <React.StrictMode>
+      <NextUIProvider>
+        <main className="dark text-foreground bg-background">
+          <Header />
+          <Outlet />
+          <Footer />
+        </main>
+      </NextUIProvider>
+    </React.StrictMode>
   );
 };
 
@@ -32,11 +37,7 @@ const appRouter = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: (
-          <React.StrictMode>
-            <Body />
-          </React.StrictMode>
-        ),
+        element: <Body />,
       },
       {
         path: "/about",
